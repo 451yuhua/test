@@ -1,0 +1,30 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /newpermission
+    
+spring:
+  application:
+    name: newpermission
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/permission?useSSL=false
+    type: com.alibaba.druid.pool.DruidDataSource
+    username: root
+    password: root
+#  cloud:
+#    config:
+#      server:
+#        git:
+#          uri: https://github.com/spring-cloud-samples/config-repo
+#          basedir:
+#            target/config
+    
+mybatis:
+  mapper-locations:
+  - classpath:com.newpermission.mapper/*.xml
+  type-aliases-package: com.newpermission.pojo
+  
+mapper:
+  mappers:
+  - com.newpermission.utils.MyMapper
