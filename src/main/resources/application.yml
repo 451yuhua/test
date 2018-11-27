@@ -12,6 +12,16 @@ spring:
     type: com.alibaba.druid.pool.DruidDataSource
     username: root
     password: root
+  redis:
+    host: localhost
+    port: 6379
+    jedis:
+      pool:
+        max-idle: 20
+        min-idle: 10
+        max-active: 50
+        max-wait:
+          -1
 #  cloud:
 #    config:
 #      server:
@@ -28,3 +38,4 @@ mybatis:
 mapper:
   mappers:
   - com.newpermission.utils.MyMapper
+  
