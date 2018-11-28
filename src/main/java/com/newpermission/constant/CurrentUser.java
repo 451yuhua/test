@@ -2,6 +2,7 @@ package com.newpermission.constant;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Set;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -65,6 +66,8 @@ public class CurrentUser implements Serializable{
     private String operateIp;
     
     private Integer redisVersion;
+    
+    private Set<String> urlSet;
     
     
 }
