@@ -33,7 +33,9 @@
                              type="XMLMAPPER"/>
 
 
-		<table tableName="%"></table>
+		<table tableName="sys_user_acl"></table>
+		<table tableName="sys_dept_acl"></table>
+		<table tableName="sys_dept_user"></table>
 		
 		 
     </context>

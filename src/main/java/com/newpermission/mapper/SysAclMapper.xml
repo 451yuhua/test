@@ -18,10 +18,10 @@
     <result column="operate_time" jdbcType="TIMESTAMP" property="operateTime" />
     <result column="operate_ip" jdbcType="VARCHAR" property="operateIp" />
   </resultMap>
-  <resultMap id="BaseResultMap" type="com.newpermission.pojo.SysAcl">
-    <!--
+  <!-- <resultMap id="BaseResultMap" type="com.newpermission.pojo.SysAcl">
+    
       WARNING - @mbg.generated
-    -->
+   
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="code" jdbcType="VARCHAR" property="code" />
     <result column="name" jdbcType="VARCHAR" property="name" />
@@ -34,5 +34,18 @@
     <result column="operator" jdbcType="VARCHAR" property="operator" />
     <result column="operate_time" jdbcType="TIMESTAMP" property="operateTime" />
     <result column="operate_ip" jdbcType="VARCHAR" property="operateIp" />
-  </resultMap>
+  </resultMap> -->
+  
+  <select id="selectUrlsByIds" parameterType="java.lang.Integer" resultType="string">
+  	SELECT url FROM sys_acl a WHERE EXISTS 
+  	(SELECT 1 FROM sys_role_acl r WHERE r.acl_id = a.id AND r.role_id = #{roleId})
+  </select>
+  
+  <select id="selectUrlById" parameterType="java.lang.Integer" resultType="string">
+  	select url from sys_acl where id = #{id}
+  </select>
+  
+  <select id="selectUrl" resultType="java.lang.String">
+  	select url from sys_acl where id = 1
+  </select>
 </mapper>

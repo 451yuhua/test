@@ -1,0 +1,29 @@
+server.port=8080
+server.servlet.context-path=/newpermission
+    
+spring.application.name=newpermission
+spring.datasource.driver-class-name=com.mysql.jdbc.Driver
+spring.datasource.url=jdbc:mysql://localhost:3306/permission?useSSL=false
+spring.datasource.type=com.alibaba.druid.pool.DruidDataSource
+spring.datasource.username=root
+spring.datasource.password=root
+spring.redis.host=localhost
+spring.redis.port=6379
+spring.redis.jedis.pool.max-idle=20
+spring.redis.jedis.min-idle=10
+spring.redis.jedis.max-active=50
+spring.redis.jedis.max-wait=-1
+#  cloud:
+#    config:
+#      server:
+#        git:
+#          uri: https://github.com/spring-cloud-samples/config-repo
+#          basedir:
+#            target/config
+    
+
+mybatis.mapper-locations=classpath:com.newpermission.mapper/*.xml
+mybatis.type-aliases-package: com.newpermission.pojo
+  
+mapper.mappers=com.newpermission.utils.MyMapper
+  
