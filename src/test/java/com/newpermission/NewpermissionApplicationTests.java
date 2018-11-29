@@ -14,8 +14,6 @@ import com.newpermission.service.CommonService;
 import com.newpermission.service.SysAclService;
 import com.newpermission.service.SysUserService;
 
-import tk.mybatis.spring.annotation.MapperScan;
-
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class NewpermissionApplicationTests {
@@ -26,8 +24,8 @@ public class NewpermissionApplicationTests {
 	@Autowired
 	private CommonService commonService;
 	
-//	@Autowired
-//	private SysAclMapper sysAclMapper;
+	@Autowired
+	private SysAclMapper sysAclMapper;
 	
 	@Autowired
 	private SysAclService aclService;
@@ -43,12 +41,12 @@ public class NewpermissionApplicationTests {
 	
 	@Test
 	public void urlsTest() {
-		/*Set<String> urls = sysAclMapper.selectUrlsByIds(4);
+		Set<String> urls = sysAclMapper.selectUrlsByIds(4);
 		for (String url : urls) {
 			System.out.println(url);
-		}*/
-		String url = aclService.getUrl();
-		System.out.println(url);
+		}
+//		String url = aclService.getUrl();
+//		System.out.println(url);
 	}
 
 }

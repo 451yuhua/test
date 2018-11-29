@@ -15,18 +15,4 @@
     <result column="old_value" jdbcType="LONGVARCHAR" property="oldValue" />
     <result column="new_value" jdbcType="LONGVARCHAR" property="newValue" />
   </resultMap>
-  <resultMap id="BaseResultMap" type="com.newpermission.pojo.SysLog">
-    <!--
-      WARNING - @mbg.generated
-    -->
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="type" jdbcType="INTEGER" property="type" />
-    <result column="target_id" jdbcType="INTEGER" property="targetId" />
-    <result column="operator" jdbcType="VARCHAR" property="operator" />
-    <result column="operate_time" jdbcType="TIMESTAMP" property="operateTime" />
-    <result column="operate_ip" jdbcType="VARCHAR" property="operateIp" />
-    <result column="status" jdbcType="INTEGER" property="status" />
-    <result column="old_value" jdbcType="LONGVARCHAR" property="oldValue" />
-    <result column="new_value" jdbcType="LONGVARCHAR" property="newValue" />
-  </resultMap>
 </mapper>

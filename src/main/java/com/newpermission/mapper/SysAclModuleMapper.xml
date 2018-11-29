@@ -16,19 +16,4 @@
     <result column="operate_time" jdbcType="TIMESTAMP" property="operateTime" />
     <result column="operate_ip" jdbcType="VARCHAR" property="operateIp" />
   </resultMap>
-  <resultMap id="BaseResultMap" type="com.newpermission.pojo.SysAclModule">
-    <!--
-      WARNING - @mbg.generated
-    -->
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="name" jdbcType="VARCHAR" property="name" />
-    <result column="parent_id" jdbcType="INTEGER" property="parentId" />
-    <result column="level" jdbcType="VARCHAR" property="level" />
-    <result column="seq" jdbcType="INTEGER" property="seq" />
-    <result column="status" jdbcType="INTEGER" property="status" />
-    <result column="remark" jdbcType="VARCHAR" property="remark" />
-    <result column="operator" jdbcType="VARCHAR" property="operator" />
-    <result column="operate_time" jdbcType="TIMESTAMP" property="operateTime" />
-    <result column="operate_ip" jdbcType="VARCHAR" property="operateIp" />
-  </resultMap>
 </mapper>

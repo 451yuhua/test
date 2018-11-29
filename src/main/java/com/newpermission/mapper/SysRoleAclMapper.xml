@@ -12,15 +12,4 @@
     <result column="operate_time" jdbcType="TIMESTAMP" property="operateTime" />
     <result column="operate_ip" jdbcType="VARCHAR" property="operateIp" />
   </resultMap>
-  <resultMap id="BaseResultMap" type="com.newpermission.pojo.SysRoleAcl">
-    <!--
-      WARNING - @mbg.generated
-    -->
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="role_id" jdbcType="INTEGER" property="roleId" />
-    <result column="acl_id" jdbcType="INTEGER" property="aclId" />
-    <result column="operator" jdbcType="VARCHAR" property="operator" />
-    <result column="operate_time" jdbcType="TIMESTAMP" property="operateTime" />
-    <result column="operate_ip" jdbcType="VARCHAR" property="operateIp" />
-  </resultMap>
 </mapper>

@@ -32,8 +32,12 @@ spring:
     
 mybatis:
   mapper-locations:
-  - classpath:com.newpermission.mapper/*.xml
+  - classpath:com/newpermission/mapper/*.xml
   type-aliases-package: com.newpermission.pojo
+  
+  check-config-location: true
+  
+  
   
 mapper:
   mappers:
