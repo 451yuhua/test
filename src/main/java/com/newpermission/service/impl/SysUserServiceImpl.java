@@ -35,6 +35,11 @@ public class SysUserServiceImpl implements SysUserService{
 		return user;
 		
 	}
+
+	@Override
+	public String getUsername() {
+		return null;
+	}
 	
 	
 }

@@ -11,7 +11,10 @@ import org.springframework.test.context.junit4.SpringRunner;
 import com.newpermission.dao.SysAclMapper;
 import com.newpermission.pojo.SysUser;
 import com.newpermission.service.CommonService;
+import com.newpermission.service.SysAclService;
 import com.newpermission.service.SysUserService;
+
+import tk.mybatis.spring.annotation.MapperScan;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -23,8 +26,11 @@ public class NewpermissionApplicationTests {
 	@Autowired
 	private CommonService commonService;
 	
+//	@Autowired
+//	private SysAclMapper sysAclMapper;
+	
 	@Autowired
-	private SysAclMapper sysAclMapper;
+	private SysAclService aclService;
 	
 	@Test
 	public void contextLoads() {
@@ -41,7 +47,7 @@ public class NewpermissionApplicationTests {
 		for (String url : urls) {
 			System.out.println(url);
 		}*/
-		String url = sysAclMapper.selectUrl();
+		String url = aclService.getUrl();
 		System.out.println(url);
 	}
 

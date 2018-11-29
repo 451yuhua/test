@@ -5,4 +5,5 @@ import com.newpermission.pojo.SysUser;
 public interface SysUserService {
 
 	SysUser findByUsername(String username);
+	String getUsername();
 }
