@@ -1,5 +1,7 @@
 package com.newpermission;
 
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.junit.Test;
@@ -8,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.alibaba.fastjson.JSON;
 import com.newpermission.dao.SysAclMapper;
 import com.newpermission.dao.SysDeptAclMapper;
 import com.newpermission.dao.SysDeptMapper;
@@ -20,6 +23,7 @@ import com.newpermission.pojo.SysUser;
 import com.newpermission.service.CommonService;
 import com.newpermission.service.SysAclService;
 import com.newpermission.service.SysUserService;
+import com.newpermission.utils.EntityFillUtil;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -86,6 +90,14 @@ public class NewpermissionApplicationTests {
 //		sysDeptAcl.setOpertateIp("127.0.0.1");
 //		sysDeptAclMapper.insertSelective(sysDeptAcl);
 		
+	}
+	
+	@Test
+	public void deptTreeTest() {
+		List<SysDept> depts = sysDeptMapper.selectAll();
+		List<Map<String, Object>> deptTree = EntityFillUtil.gijGoFormatCommonUtil(depts, "name", "parentId", 0, "id");
+		String treeResult = JSON.toJSONString(deptTree);
+		System.out.println(treeResult);
 	}
 
 }
