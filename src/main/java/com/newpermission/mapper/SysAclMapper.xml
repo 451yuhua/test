@@ -36,7 +36,7 @@
     <result column="operate_ip" jdbcType="VARCHAR" property="operateIp" />
   </resultMap> -->
   
-  <select id="selectUrlsByIds" parameterType="java.lang.Integer" resultType="string">
+  <select id="getUrlsByRoleId" parameterType="java.lang.Integer" resultType="string">
   	SELECT url FROM sys_acl a WHERE EXISTS 
   	(SELECT 1 FROM sys_role_acl r WHERE r.acl_id = a.id AND r.role_id = #{roleId})
   </select>
@@ -47,5 +47,17 @@
   
   <select id="selectUrl" resultType="java.lang.String">
   	select url from sys_acl where id = 1
+  </select>
+  
+  <select id="getUrlsByUserId" parameterType="java.lang.Integer" resultType="string">
+  	SELECT a.url from sys_acl a RIGHT JOIN sys_role_acl r ON r.acl_id = a.id WHERE EXISTS (
+		SELECT 1	from sys_role_user  ru WHERE ru.user_id = #{userId} AND ru.role_id = r.role_id
+	)
+  </select>
+  
+  <select id="getDeptUrlsByUserId" parameterType="java.lang.Integer" resultType="string">
+  	select a.url from sys_acl a left join sys_dept_acl da on da.acl_id = a.id where exists (
+  		select 1 from sys_dept_user du where du.user_id = #{userId} and du.dept_id = da.dept_id
+  	)
   </select>
 </mapper>

@@ -1,5 +1,6 @@
 package com.newpermission.dao;
 
+import java.util.List;
 import java.util.Set;
 
 import org.apache.ibatis.annotations.Param;
@@ -13,7 +14,9 @@ import com.newpermission.utils.MyMapper;
 */
 public interface SysAclMapper extends MyMapper<SysAcl> {
 	
-	Set<String> selectUrlsByIds(@Param("roleId") Integer roleId);
+	Set<String> getUrlsByRoleId(@Param("roleId") Integer roleId);
 	String selectUrlById(Integer id);
 	String selectUrl();
+	Set<String> getUrlsByUserId(@Param("userId") Integer userId);
+	Set<String> getDeptUrlsByUserId(@Param("userId") Integer userId);
 }

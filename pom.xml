@@ -94,6 +94,14 @@
 			<artifactId>spring-boot-starter-data-redis</artifactId>
 		</dependency>
 
+		<!-- https://mvnrepository.com/artifact/com.alibaba/fastjson -->
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+			<version>1.2.47</version>
+		</dependency>
+
+
 	</dependencies>
 
 	<build>
@@ -103,22 +111,10 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 		</plugins>
-		<!-- <resources>
-			<resource>
-				<directory>src/main/java</directory>
-				<includes>
-					<include>**/*.xml</include>
-				</includes>
-				<filtering>false</filtering>
-			</resource>
-			<resource>
-                <directory>src/main/resources</directory>
-                <includes>                     
-                    <include>**/*.*</include>
-                </includes>
-                <filtering>false</filtering>
-            </resource>
-		</resources> -->
+		<!-- <resources> <resource> <directory>src/main/java</directory> <includes> 
+			<include>**/*.xml</include> </includes> <filtering>false</filtering> </resource> 
+			<resource> <directory>src/main/resources</directory> <includes> <include>**/*.*</include> 
+			</includes> <filtering>false</filtering> </resource> </resources> -->
 	</build>
 
 
