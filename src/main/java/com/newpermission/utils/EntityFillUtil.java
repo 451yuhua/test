@@ -88,7 +88,7 @@ public class EntityFillUtil {
 						resultList = gijGoFormatCommonUtil(tempList, textName, pidPropertyName, id, idName);
 					}
 					if (resultList != null && !resultList.isEmpty()) {
-						treeMap.put("chidren", resultList);
+						treeMap.put("children", resultList);
 					}
 				}
 			} catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException
@@ -96,28 +96,46 @@ public class EntityFillUtil {
 				e1.printStackTrace();
 			}
 		}
-		/*for (T obj : list) {
+		return treeList;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public static <T, E> List<Map<String, Object>> vueTreeFormatCommonUtil(List<E> list,String textName,String pidPropertyName, T parentId,String idName){
+		List<Map<String, Object>> treeList = new ArrayList<>();
+		Map<String, Object> treeMap = null;
+		Method getIdM = null;
+		Method getNameM = null;
+		List<E> tempList = new ArrayList<>();
+		tempList.addAll(list);
+		Method parentIdMethod = null;
+		for (E e : list) {
+			Class<?> eClass = e.getClass(); 
 			treeMap = new HashMap<>();
 			try {
-				Class<?> objClass = obj.getClass();
-				//id = objClass.getDeclaredField(idName);
-				getIdM = objClass.getMethod("get"+lowerToUpper(idName));
-				//children = objClass.getDeclaredField(childPropertyName);
-				getChildrenM = objClass.getMethod("get"+lowerToUpper(childPropertyName));
-				getNameM = objClass.getMethod("get"+lowerToUpper(text));
-				//name = objClass.getDeclaredField(text);
-				treeMap.put("id",  getIdM.invoke(obj));
-				//treeMap.put("children", getChildrenM.invoke(obj));
-				treeMap.put("text",  getNameM.invoke(obj));
-				List<T> childrenList1 = (List<T>)getChildrenM.invoke(obj);
-				if(childrenList != null && childrenList.size() > 0) {
-					treeMap.put("children", gijGoFormatCommonsUtil( childrenList,text,childPropertyName,idName));
+				parentIdMethod = eClass.getMethod("get" + lowerToUpper(pidPropertyName));
+				T pid = (T) parentIdMethod.invoke(e);
+				T id = null;
+				if (parentId.equals(pid)) {
+					getIdM = eClass.getMethod("get" + lowerToUpper(idName));
+					treeMap.put("id", getIdM.invoke(e));
+					id = (T) getIdM.invoke(e);
+					getNameM = eClass.getMethod("get" + lowerToUpper(textName));
+					treeMap.put("label", getNameM.invoke(e));
+					treeList.add(treeMap);
+					tempList.remove(e);
+					List<Map<String, Object>> resultList = null;
+					if (tempList != null && tempList.size() > 0) {
+						resultList = vueTreeFormatCommonUtil(tempList, textName, pidPropertyName, id, idName);
+					}
+					if (resultList != null && !resultList.isEmpty()) {
+						treeMap.put("nodes", resultList);
+					}
 				}
-				treeList.add(treeMap);
-			} catch (SecurityException | IllegalArgumentException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
-				e.printStackTrace();
+			} catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException
+					| InvocationTargetException e1) {
+				e1.printStackTrace();
 			}
-		}*/
+		}
 		return treeList;
 	}
 	
