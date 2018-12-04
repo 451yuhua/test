@@ -98,9 +98,20 @@ public class NewpermissionApplicationTests {
 	@Test
 	public void deptTreeTest() {
 		List<SysDept> depts = sysDeptMapper.selectAll();
-		List<Map<String, Object>> deptTree = EntityFillUtil.gijGoFormatCommonUtil(depts, "name", "parentId", 0, "id");
-		String treeResult = JSON.toJSONString(deptTree);
-		System.out.println(treeResult);
+//		List<SysDept> parentDepts = EntityFillUtil.getParentsAndChildren(depts, SysDept.class, "parentId", "id", 2);
+//		List<Map<String, Object>> deptParentTree = EntityFillUtil.vueTreeFormatCommonUtil(parentDepts, "name", "parentId", 0, "id");
+//		List<Map<String, Object>> deptTree = EntityFillUtil.vueTreeFormatCommonUtil(depts, "name", "parentId", 2, "id");
+//		List<Map<String, Object>> resultList = EntityFillUtil.vueTreeFormatFromNodeUtil(parentDepts, "name", "parentId", 2, "id", deptTree);
+//		String treeResult = JSON.toJSONString(deptTree);
+//		String treeParentResult = JSON.toJSONString(deptParentTree);
+		Long start = System.currentTimeMillis();
+		List<Map<String, Object>> resultList = EntityFillUtil.treeFormatByNode(depts, SysDept.class, "name", "parentId", 2, "id");
+		Long end = System.currentTimeMillis();
+		String result = JSON.toJSONString(resultList);
+//		System.out.println(treeParentResult);
+//		System.out.println(treeResult);
+		System.out.println(result);
+		System.out.println(end - start);
 	}
 
 }
