@@ -1,5 +1,7 @@
 package com.newpermission;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -53,10 +55,11 @@ public class NewpermissionApplicationTests {
 	@Test
 	public void contextLoads() {
 //		System.out.println(commonService.getCurrentUser("6670B63DD85ACEC9C5468D46C01F44A5A607401A").getUsername());
-		SysUser user = userService.findByUsername("Admin");
-		if(null != user) {
-			System.out.println("Admin的邮箱为："+user.getMail());
-		}
+//		SysUser user = userService.findByUsername("Admin");
+//		if(null != user) {
+//			System.out.println("Admin的邮箱为："+user.getMail());
+//		}
+		assertEquals("admin", userService.findByUsername("Admin").getMail());//断言测试
 	}
 	
 	@Test

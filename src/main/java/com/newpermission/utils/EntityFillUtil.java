@@ -144,6 +144,11 @@ public class EntityFillUtil {
 		return str.substring(0, 1).toUpperCase()+str.substring(1);
 	}
 	
+	public static <T> List<T> getParentsAndChildren(List<T> list,T t, String relationName) {
+		
+		return null;
+	}
+	
 	public static void main(String[] args) {
 		List<String> list = new ArrayList<>();
 		List<String> list2 = new ArrayList<>();
