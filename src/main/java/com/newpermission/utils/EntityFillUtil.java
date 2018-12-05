@@ -227,6 +227,38 @@ public class EntityFillUtil {
 		return vueTreeFormatFromNodeUtil(parentList, textName, pidPropertyName, id, idName, children);
 	}
 	
+	@SuppressWarnings("unchecked")
+	public static <T, E> List<T> getChildren(List<T> list, Class<?> clazz,E id, String pidPropertyName, String idName) {
+		List<T> children = new ArrayList<>();
+		try {
+			Method parentMethod = clazz.getMethod("get"+lowerToUpper(pidPropertyName));
+			Method idMethod = clazz.getMethod("get"+lowerToUpper(idName));
+			List<T> tempList = new ArrayList<>();
+//			List<E> childIds = new ArrayList<>();
+			tempList.addAll(list);
+			for (T t : list) {
+				E pid = (E) parentMethod.invoke(t);
+				E tid = (E) idMethod.invoke(t);
+				if (id.equals(tid)) {
+					children.add(t);
+					tempList.remove(t);
+				}
+				if (id.equals(pid)) {
+					children.add(t);
+					tempList.remove(t);
+//					childIds.add(tid);
+					children.addAll(getChildren(tempList, clazz, tid, pidPropertyName, idName));
+				}
+			}
+			/*for (E e : childIds) {
+				children.addAll(getChildren(tempList, clazz, e, pidPropertyName, idName));
+			}*/
+		} catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+			e.printStackTrace();
+		}
+		return children;
+	}
+	
 	public static void main(String[] args) {
 		List<String> list = new ArrayList<>();
 		List<String> list2 = new ArrayList<>();

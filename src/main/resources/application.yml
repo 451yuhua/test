@@ -8,7 +8,7 @@ spring:
     name: newpermission
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/permission?useSSL=false
+    url: jdbc:mysql://localhost:3306/permission?useSSL=false&allowMultiQueries=true
     type: com.alibaba.druid.pool.DruidDataSource
     username: root
     password: root

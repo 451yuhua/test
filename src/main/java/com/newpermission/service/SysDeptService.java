@@ -8,4 +8,6 @@ public interface SysDeptService {
 
 	List<SysDept> findAll();
 
+	List<SysDept> getDeptAndChildrenById(Integer id);
+
 }

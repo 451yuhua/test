@@ -13,6 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.alibaba.fastjson.JSON;
+import com.newpermission.controller.SysDeptController;
 import com.newpermission.dao.SysAclMapper;
 import com.newpermission.dao.SysDeptAclMapper;
 import com.newpermission.dao.SysDeptMapper;
@@ -22,6 +23,7 @@ import com.newpermission.pojo.SysDept;
 import com.newpermission.pojo.SysDeptAcl;
 import com.newpermission.pojo.SysDeptUser;
 import com.newpermission.pojo.SysUser;
+import com.newpermission.pojo.result.Result;
 import com.newpermission.service.CommonService;
 import com.newpermission.service.SysAclService;
 import com.newpermission.service.SysUserService;
@@ -51,6 +53,9 @@ public class NewpermissionApplicationTests {
 	
 	@Autowired 
 	private SysDeptUserMapper sysDeptUserMapper;
+	
+	@Autowired
+	private SysDeptController sysDeptController;
 	
 	@Test
 	public void contextLoads() {
@@ -112,6 +117,31 @@ public class NewpermissionApplicationTests {
 //		System.out.println(treeResult);
 		System.out.println(result);
 		System.out.println(end - start);
+	}
+	
+	@Test
+	public void getChildrenTest() {
+		List<SysDept> depts = sysDeptMapper.selectAll();
+		List<SysDept> children = EntityFillUtil.getChildren(depts, SysDept.class, 0, "parentId", "id");
+		for (SysDept sysDept : children) {
+			System.out.println(sysDept.getId()+":"+sysDept.getName()+":"+sysDept.getParentId());
+		}
+	}
+	
+	@Test
+	public void deptMapperTest() {
+		List<SysDept> depts = sysDeptMapper.selectAll();
+		List<SysDept> children = EntityFillUtil.getChildren(depts, SysDept.class, 2, "parentId", "id");
+		for (SysDept sysDept : children) {
+			sysDept.setLevel(sysDept.getLevel()+".1");
+		}
+		sysDeptMapper.batchUpdateDeptGroup(children);
+	}
+	
+	@Test
+	public void sysDeptControllerTest() {
+		Result<List<Map<String, Object>>> result = sysDeptController.getDeptResult(2);
+		System.out.println(JSON.toJSONString(result));
 	}
 
 }

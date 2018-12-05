@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.newpermission.dao.SysDeptMapper;
 import com.newpermission.pojo.SysDept;
 import com.newpermission.service.SysDeptService;
+import com.newpermission.utils.EntityFillUtil;
 
 @Service
 public class SysDeptServiceImpl implements SysDeptService {
@@ -18,6 +19,13 @@ public class SysDeptServiceImpl implements SysDeptService {
 	@Override
 	public List<SysDept> findAll() {
 		return sysDeptMapper.selectAll();
+	}
+	
+	@Override
+	public List<SysDept> getDeptAndChildrenById(Integer id) {
+		List<SysDept> depts = sysDeptMapper.selectAll();
+		List<SysDept> deptChildren = EntityFillUtil.getChildren(depts, SysDept.class, id, "parentId", "id");
+		return deptChildren;
 	}
 
 }

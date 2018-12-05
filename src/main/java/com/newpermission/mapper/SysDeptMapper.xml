@@ -15,4 +15,24 @@
     <result column="operate_time" jdbcType="TIMESTAMP" property="operateTime" />
     <result column="operate_ip" jdbcType="VARCHAR" property="operateIp" />
   </resultMap>
+  
+  <update id="batchUpdateDeptGroup" parameterType="SysDept">
+  	<foreach collection="depts" index="i" item="dept" separator=";">
+			<choose>
+				<when test="i == 0">
+					update sys_dept dept set 
+					parent_id = #{dept.parentId}, 
+					name = #{dept.name},
+					level = #{dept.level},
+					remark = #{dept.remark},
+					seq = #{dept.seq},
+					operator = #{dept.operator},
+					operate_ip = #{dept.operateIp} where id = #{dept.id}
+				</when>
+				<otherwise>
+					update sys_dept set level = #{dept.level} where id = #{dept.id}
+				</otherwise>
+			</choose>
+		</foreach>
+  </update>
 </mapper>
