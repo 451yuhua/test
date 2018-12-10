@@ -13,11 +13,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.alibaba.fastjson.JSON;
+import com.newpermission.constant.CurrentUser;
 import com.newpermission.controller.SysDeptController;
 import com.newpermission.dao.SysAclMapper;
 import com.newpermission.dao.SysDeptAclMapper;
 import com.newpermission.dao.SysDeptMapper;
 import com.newpermission.dao.SysDeptUserMapper;
+import com.newpermission.model.loginUser;
 import com.newpermission.pojo.SysAcl;
 import com.newpermission.pojo.SysDept;
 import com.newpermission.pojo.SysDeptAcl;
@@ -142,6 +144,22 @@ public class NewpermissionApplicationTests {
 	public void sysDeptControllerTest() {
 		Result<List<Map<String, Object>>> result = sysDeptController.getDeptResult(2);
 		System.out.println(JSON.toJSONString(result));
+	}
+	
+	@Test
+	public void userLoginServiceTest() {
+		loginUser loginUser = new loginUser("Admin", "18612344321", "25D55AD283AA400AF464C76D713C07AD", "", "127.0.0.1");
+		CurrentUser currentUser = userService.login(loginUser);
+		CurrentUser cUser = commonService.getCurrentUser(currentUser.getToken());
+		assertEquals(currentUser.getUsername(), cUser.getUsername());
+	}
+	
+	@Test
+	public void redisTest() {
+		CurrentUser currentUser = commonService.getCurrentUser("86F0F3C8C625C80077846FC035D2B29340CC723E");
+		if (currentUser != null) {
+			System.out.println(currentUser.getUsername());
+		}
 	}
 
 }

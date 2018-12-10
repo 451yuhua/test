@@ -7,6 +7,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.newpermission.constant.CurrentUser;
+import com.newpermission.model.loginUser;
+import com.newpermission.pojo.result.Result;
+import com.newpermission.pojo.result.ResultGenerator;
 import com.newpermission.service.CommonService;
 import com.newpermission.service.SysUserService;
 
@@ -22,5 +25,11 @@ public class SysUserController {
 	public ResponseEntity<CurrentUser> login(){
 		CurrentUser cUser = new CurrentUser();
 		return new ResponseEntity<CurrentUser>(cUser ,HttpStatus.OK);
+	}
+	
+	public Result<CurrentUser> userLogin(loginUser loginUser) {
+		
+		CurrentUser cUser = new CurrentUser();
+		return ResultGenerator.genSuccessResult(cUser);
 	}
 }

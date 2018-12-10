@@ -1,6 +1,7 @@
 package com.newpermission.service.impl;
 
 import java.text.MessageFormat;
+import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -28,7 +29,7 @@ public class CommonServiceImpl implements CommonService {
 		String token = GenerateUtil.generateToken(params, "SHA-1");
 		String key = MessageFormat.format(ACCESS_TOKEN, token);
 		ValueOperations<String, CurrentUser> currentOpration = currentUserRedis.opsForValue();
-		currentOpration.set(key, currentUser);
+		currentOpration.set(key, currentUser,60L*60*2,TimeUnit.SECONDS);
 		return true;
 	}
 
