@@ -3,6 +3,7 @@ package com.newpermission.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -27,9 +28,10 @@ public class SysUserController {
 		return new ResponseEntity<CurrentUser>(cUser ,HttpStatus.OK);
 	}
 	
+	@PostMapping("/login")
 	public Result<CurrentUser> userLogin(loginUser loginUser) {
 		
-		CurrentUser cUser = new CurrentUser();
+		 CurrentUser cUser = sysUserService.login(loginUser);
 		return ResultGenerator.genSuccessResult(cUser);
 	}
 }

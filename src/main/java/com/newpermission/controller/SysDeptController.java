@@ -18,7 +18,7 @@ import com.newpermission.pojo.result.ResultGenerator;
 import com.newpermission.service.SysDeptService;
 import com.newpermission.utils.EntityFillUtil;
 
-@RequestMapping("/dept")
+@RequestMapping("/sys/dept")
 @RestController
 @CrossOrigin
 public class SysDeptController {

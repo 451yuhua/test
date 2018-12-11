@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import com.newpermission.constant.CurrentUser;
 import com.newpermission.service.CommonService;
@@ -22,11 +23,14 @@ public class CommonServiceImpl implements CommonService {
 	
 	@Override
 	public boolean putCurrentUserToRedis(CurrentUser currentUser) {
-		if(null == currentUser) {
+		if(null == currentUser || currentUser.getToken() == null) {
 			return false;
 		}
-		String[] params = {currentUser.getTelephone(), System.currentTimeMillis()+""};
-		String token = GenerateUtil.generateToken(params, "SHA-1");
+		String token = currentUser.getToken();
+		/*if (StringUtils.isEmpty(token)) {
+			String[] params = { currentUser.getTelephone(), System.currentTimeMillis() + "" };
+			token = GenerateUtil.generateToken(params, "SHA-1");
+		}*/
 		String key = MessageFormat.format(ACCESS_TOKEN, token);
 		ValueOperations<String, CurrentUser> currentOpration = currentUserRedis.opsForValue();
 		currentOpration.set(key, currentUser,60L*60*2,TimeUnit.SECONDS);
