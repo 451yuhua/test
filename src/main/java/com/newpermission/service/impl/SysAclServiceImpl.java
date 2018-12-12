@@ -1,12 +1,12 @@
 package com.newpermission.service.impl;
 
-import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.newpermission.dao.SysAclMapper;
+import com.newpermission.pojo.SysAcl;
 import com.newpermission.service.SysAclService;
 
 @Service
@@ -31,8 +31,11 @@ public class SysAclServiceImpl implements SysAclService {
 	}
 
 	@Override
-	public List<String> getDeptUrlsByUserId(Integer userId) {
-		// TODO Auto-generated method stub
-		return null;
+	public Set<String> getDeptUrlsByUserId(Integer userId) {
+		return sysAclMapper.getDeptUrlsByUserId(userId);
+	}
+	
+	public void addAcl(SysAcl acl) {
+		
 	}
 }
