@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.newpermission.constant.CurrentUser;
 import com.newpermission.pojo.SysDept;
+import com.newpermission.pojo.criteria.SysDeptCriteria;
 import com.newpermission.pojo.result.Code;
 import com.newpermission.pojo.result.CommonCode;
 import com.newpermission.pojo.result.Result;
@@ -44,5 +46,10 @@ public class SysDeptController {
 		List<SysDept> depts = sysDeptService.getDeptAndChildrenById(id);
 		List<SysDept> deptChildren = EntityFillUtil.getChildren(depts, SysDept.class, id, "parentId", "id");
 		return ResultGenerator.genSuccessResult(EntityFillUtil.treeFormatByNode(deptChildren, SysDept.class, "name", "parentId", id, "id"));
+	}
+	
+	public Result<?> addDept(SysDeptCriteria deptCriteria, CurrentUser cUser) {
+		sysDeptService.addDept(deptCriteria, cUser);
+		return ResultGenerator.genSuccessResult("添加成功");
 	}
 }
