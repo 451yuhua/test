@@ -7,6 +7,12 @@ import java.util.Arrays;
 
 public class GenerateUtil {
 
+	/**
+	 * token生成工具
+	 * @param params
+	 * @param algorithm
+	 * @return
+	 */
 	public static String generateToken(String[] params, String algorithm) {
 		String result = null;
 		if (params != null & params.length > 0) {
