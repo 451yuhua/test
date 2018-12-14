@@ -1,6 +1,9 @@
 package com.newpermission.service.impl;
 
+import java.text.DateFormat;
 import java.text.MessageFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,14 +15,20 @@ import org.springframework.util.StringUtils;
 import com.newpermission.constant.CurrentUser;
 import com.newpermission.service.CommonService;
 import com.newpermission.utils.GenerateUtil;
+import com.newpermission.utils.RedisUtil;
 
 @Service
 public class CommonServiceImpl implements CommonService {
 
 	private static String ACCESS_TOKEN = "AccessToken:{0}";
 	
+	private static String genAclCodeKey = "ACLCODE:{}";
+	
 	@Autowired
 	private RedisTemplate<String, CurrentUser> currentUserRedis;
+	
+	@Autowired
+	private RedisUtil redisUtil;
 	
 	@Override
 	public boolean putCurrentUserToRedis(CurrentUser currentUser) {
@@ -43,6 +52,23 @@ public class CommonServiceImpl implements CommonService {
 		ValueOperations<String, CurrentUser> currentOpration = currentUserRedis.opsForValue();
 		CurrentUser cUser = currentOpration.get(key);
 		return cUser;
+	}
+
+	@Override
+	public String genAclCode() {
+		Date date = new Date();
+		DateFormat format = new SimpleDateFormat("yyyyMMddHHmmss");
+		String aclCodePre = format.format(date);
+		String aclKey = MessageFormat.format(genAclCodeKey, aclCodePre);
+		String aclCodeSuffix = redisUtil.getValue(aclKey);
+		if(StringUtils.isEmpty(aclCodeSuffix)) {
+			aclCodeSuffix = "00001";
+		}else {
+			int suffix = Integer.parseInt(aclCodeSuffix);
+			aclCodeSuffix = ""+ suffix++;
+		}
+		redisUtil.setString(aclKey, aclCodeSuffix);
+		return aclCodePre + aclCodeSuffix;
 	}
 
 }

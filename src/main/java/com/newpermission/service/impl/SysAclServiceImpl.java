@@ -13,6 +13,7 @@ import com.newpermission.exception.ServiceExcetion;
 import com.newpermission.pojo.SysAcl;
 import com.newpermission.pojo.criteria.SysAclCriteria;
 import com.newpermission.pojo.result.CommonCode;
+import com.newpermission.service.CommonService;
 import com.newpermission.service.SysAclService;
 
 @Service
@@ -21,6 +22,9 @@ public class SysAclServiceImpl implements SysAclService {
 
 	@Autowired
 	private SysAclMapper sysAclMapper;
+	
+	@Autowired
+	private CommonService commonService;
 
 	@Override
 	public String getUrl() {
@@ -50,6 +54,6 @@ public class SysAclServiceImpl implements SysAclService {
 		SysAcl acl = new SysAcl();
 		BeanUtils.copyProperties(aclCriteria, acl);
 		acl.setOperator(cUser.getUsername());
-		acl.setCode("");
+		acl.setCode(commonService.genAclCode());
 	}
 }
