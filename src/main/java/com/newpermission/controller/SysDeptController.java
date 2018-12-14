@@ -7,10 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.newpermission.constant.CurrentUser;
+import com.newpermission.interceptor.annotation.CurrentUserAnnotation;
 import com.newpermission.pojo.SysDept;
 import com.newpermission.pojo.criteria.SysDeptCriteria;
 import com.newpermission.pojo.result.Code;
@@ -48,7 +50,9 @@ public class SysDeptController {
 		return ResultGenerator.genSuccessResult(EntityFillUtil.treeFormatByNode(deptChildren, SysDept.class, "name", "parentId", id, "id"));
 	}
 	
-	public Result<?> addDept(SysDeptCriteria deptCriteria, CurrentUser cUser) {
+	@PostMapping("/addDept")
+	public Result<?> addDept(SysDeptCriteria deptCriteria,@CurrentUserAnnotation CurrentUser cUser) {
+//		System.out.println(cUser.getUsername());
 		sysDeptService.addDept(deptCriteria, cUser);
 		return ResultGenerator.genSuccessResult("添加成功");
 	}

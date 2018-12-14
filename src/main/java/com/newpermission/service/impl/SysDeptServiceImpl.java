@@ -47,7 +47,11 @@ public class SysDeptServiceImpl implements SysDeptService {
 		}
 		SysDept dept = new SysDept();
 		BeanUtils.copyProperties(deptCriteria, dept);
-		dept.setLevel(parentDept.getLevel()+".1");
+		if (null != parentDept) {
+			dept.setLevel(parentDept.getLevel() + ".1");
+		}else {
+			dept.setLevel("0");
+		}
 		dept.setOperator(cUser.getUsername());
 		sysDeptMapper.insertSelective(dept);
 	}
