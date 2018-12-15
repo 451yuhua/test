@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 public class PropertyUtils {
 	
-	private static String genAclCodeKey = "ACLCODE:{}";
+	private static String genAclCodeKey = "ACLCODE:{0}";
 	
 	@Autowired
 	private RedisUtil redisUtil;
@@ -35,6 +35,7 @@ public class PropertyUtils {
 		DateFormat format = new SimpleDateFormat("yyyyMMddHHmmss");
 		
 		String aclCodePre = format.format(date);
-		System.out.println(aclCodePre);
+		String key = MessageFormat.format(genAclCodeKey, aclCodePre);
+		System.out.println(key);
 	}
 }

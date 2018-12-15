@@ -31,6 +31,7 @@ import com.newpermission.service.CommonService;
 import com.newpermission.service.SysAclService;
 import com.newpermission.service.SysUserService;
 import com.newpermission.utils.EntityFillUtil;
+import com.newpermission.utils.RedisUtil;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -62,6 +63,9 @@ public class NewpermissionApplicationTests {
 	
 	@Autowired
 	private SysUserController userContrlloer;
+	
+	@Autowired
+	private RedisUtil redisUtil;
 	
 	@Test
 	public void contextLoads() {
@@ -170,8 +174,15 @@ public class NewpermissionApplicationTests {
 	
 	@Test
 	public void userControllerTest() {
-		loginUser loginUser = new loginUser("Admin", "18612344321", "25D55AD283AA400AF464C76D713C07A", "", "127.0.0.1");
-		userContrlloer.userLogin(loginUser);
+		loginUser loginUser = new loginUser("Admin", "18612344321", "25D55AD283AA400AF464C76D713C07AD", "", "127.0.0.1");
+		Result<CurrentUser> result = userContrlloer.userLogin(loginUser);
+		System.out.println(result.getData().getToken());
+	}
+	
+	@Test
+	public void redisUtilTest() {
+		String aclCode = commonService.genAclCode();
+		System.out.println(aclCode);
 	}
 
 }

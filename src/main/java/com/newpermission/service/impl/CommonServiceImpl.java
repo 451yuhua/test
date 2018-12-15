@@ -22,7 +22,7 @@ public class CommonServiceImpl implements CommonService {
 
 	private static String ACCESS_TOKEN = "AccessToken:{0}";
 	
-	private static String genAclCodeKey = "ACLCODE:{}";
+	private static String genAclCodeKey = "ACLCODE:{0}";
 	
 	@Autowired
 	private RedisTemplate<String, CurrentUser> currentUserRedis;
@@ -68,6 +68,7 @@ public class CommonServiceImpl implements CommonService {
 			aclCodeSuffix = ""+ suffix++;
 		}
 		redisUtil.setString(aclKey, aclCodeSuffix);
+		redisUtil.setTime(aclKey, 60L);
 		return aclCodePre + aclCodeSuffix;
 	}
 
