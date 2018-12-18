@@ -7,11 +7,13 @@ spring:
   application:
     name: newpermission
   datasource:
-    driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/permission?useSSL=false&allowMultiQueries=true
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://47.104.225.226:3306/permission?useSSL=false&allowMultiQueries=true&serverTimezone=UTC&allowPublicKeyRetrieval=true
     type: com.alibaba.druid.pool.DruidDataSource
-    username: root
-    password: root
+    username: permissionuser
+    password: Root@12345
+#    username: root
+#    password: root
   redis:
     host: localhost
     port: 6379
