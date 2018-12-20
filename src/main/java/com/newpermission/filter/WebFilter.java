@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.alibaba.fastjson.JSON;
 import com.newpermission.constant.ApplicationContextHelper;
@@ -34,7 +35,12 @@ public class WebFilter implements Filter {
 		HttpServletResponse httpResponse = (HttpServletResponse)response;
 		String servletPath = httpRequest.getServletPath();
 		String token = httpRequest.getHeader("access-token");
+//		String askToken = httpRequest.getHeader("asktoken");
 		log.info(servletPath);
+		if (httpRequest.getMethod().equals(RequestMethod.OPTIONS.name())) {
+			System.out.println(RequestMethod.OPTIONS.name());
+			chain.doFilter(httpRequest, httpResponse);
+		}
 		System.out.println(servletPath);
 		httpResponse.setContentType("text/html;charset=UTF-8");
 		String result = null;

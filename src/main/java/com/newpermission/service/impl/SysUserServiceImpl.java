@@ -70,7 +70,7 @@ public class SysUserServiceImpl implements SysUserService{
 			throw new ServiceExcetion(CommonCode.SERVICE_ERROR, "没有用户登陆信息!");
 		}
 		SysUser user = findByUsername(loginUser.getUsername());
-		if (null == user) {//查看该用户是否存在
+		if (null == user || !loginUser.getUsername().equals(user.getUsername())) {//查看该用户是否存在
 			throw new ServiceExcetion(CommonCode.SERVICE_ERROR, "用户不存在");
 		}
 		if (!user.getPassword().equals(loginUser.getPassword())) {//验证密码是否正确
