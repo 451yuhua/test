@@ -11,7 +11,7 @@ public class EntityFillUtil {
 
 	private final static String CHILDRENKEY = "nodes";
 	private final static String IDKEY = "id";
-	private final static String NAMEKEY = "label";
+	private final static String NAMEKEY = "name";
 	
 	
 	

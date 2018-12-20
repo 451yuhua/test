@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.alibaba.fastjson.JSON;
@@ -26,6 +27,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @javax.servlet.annotation.WebFilter(urlPatterns= {"/test/api","/sys/dept/*"},filterName="WebFilter")
+@CrossOrigin
 public class WebFilter implements Filter {
 
 	@Override
@@ -44,25 +46,18 @@ public class WebFilter implements Filter {
 		System.out.println(servletPath);
 		httpResponse.setContentType("text/html;charset=UTF-8");
 		String result = null;
-//		httpResponse.setCharacterEncoding("UTF-8");
 		if(StringUtils.isEmpty(token)) {
-//			httpResponse.getWriter().print(new String("您无权访问路径".getBytes(), StandardCharsets.UTF_8)+servletPath);
 			result = JSON.toJSONString(ResultGenerator.genFailResult(CommonCode.SERVICE_UNAVAILABLE, "您无权访问该路径", null));
+			setOrigin(httpResponse);
 			httpResponse.getWriter().print(result);
 			return;
 		}
-//		String token = httpRequest.getHeader("access-token");
-//		String token = "6670B63DD85ACEC9C5468D46C01F44A5A607401A";
-		/*if(token == null) {
-			return;
-		}*/
-//		System.out.println(getCurrentUrls(token));
 		Set<String> urls = getCurrentUrls(token);
 		if (null != urls && urls.size() > 0 && !urls.contains(servletPath)) {
 			log.info("没有权限访问url：{}",servletPath);
 			result = JSON.toJSONString(ResultGenerator.genFailResult(CommonCode.SERVICE_UNAVAILABLE, "您无权访问该路径", null));
+			setOrigin(httpResponse);
 			httpResponse.getWriter().print(result);
-//			chain.doFilter(httpRequest, httpResponse);
 			return;
 		}
 		chain.doFilter(httpRequest, httpResponse);
@@ -76,6 +71,14 @@ public class WebFilter implements Filter {
 			return cUser.getUrlSet();
 		}
 		return null;
+	}
+	
+	private void setOrigin(HttpServletResponse response) {
+		response.setHeader("Access-Control-Allow-Origin", "*");  
+        response.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT, OPTIONS, DELETE");  
+        response.setHeader("Access-Control-Max-Age", "3600");  
+        response.setHeader("Access-Control-Allow-Headers", "x-requested-with, Content-Type, Accept, Origin");  
+        response.setHeader("Access-Control-Allow-Credentials", "true");
 	}
 
 }
