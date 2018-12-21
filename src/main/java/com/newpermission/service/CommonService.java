@@ -9,4 +9,6 @@ public interface CommonService {
 	CurrentUser getCurrentUser(String token);
 	
 	String genAclCode();
+
+	void removeCurrentUser(String token);
 }

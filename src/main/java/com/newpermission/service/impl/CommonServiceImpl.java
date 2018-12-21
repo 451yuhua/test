@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import com.newpermission.constant.CurrentUser;
+import com.newpermission.exception.ServiceExcetion;
+import com.newpermission.pojo.result.CommonCode;
 import com.newpermission.service.CommonService;
 import com.newpermission.utils.GenerateUtil;
 import com.newpermission.utils.RedisUtil;
@@ -70,6 +72,15 @@ public class CommonServiceImpl implements CommonService {
 		redisUtil.setString(aclKey, aclCodeSuffix);
 		redisUtil.setTime(aclKey, 60L);
 		return aclCodePre + aclCodeSuffix;
+	}
+	
+	@Override
+	public void removeCurrentUser(String token) {
+		if (null == token) {
+			throw new ServiceExcetion(CommonCode.SERVER_INERNAL_ERROR, "没有登录验证信息");
+		}
+		String key = MessageFormat.format(ACCESS_TOKEN, token);
+		currentUserRedis.delete(key);
 	}
 
 }

@@ -47,7 +47,7 @@ public class WebFilter implements Filter {
 		httpResponse.setContentType("text/html;charset=UTF-8");
 		String result = null;
 		if(StringUtils.isEmpty(token)) {
-			result = JSON.toJSONString(ResultGenerator.genFailResult(CommonCode.SERVICE_UNAVAILABLE, "您无权访问该路径", null));
+			result = JSON.toJSONString(ResultGenerator.genFailResult(CommonCode.SERVICE_UNAVAILABLE, "您还没有登录，请登录后再试！", null));
 			setOrigin(httpResponse);
 			httpResponse.getWriter().print(result);
 			return;

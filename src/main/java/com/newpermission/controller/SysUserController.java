@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.newpermission.constant.CurrentUser;
+import com.newpermission.interceptor.annotation.CurrentUserAnnotation;
 import com.newpermission.model.loginUser;
+import com.newpermission.pojo.result.CommonCode;
 import com.newpermission.pojo.result.Result;
 import com.newpermission.pojo.result.ResultGenerator;
 import com.newpermission.service.CommonService;
@@ -35,5 +37,14 @@ public class SysUserController {
 		
 		 CurrentUser cUser = sysUserService.login(loginUser);
 		return ResultGenerator.genSuccessResult(cUser);
+	}
+	
+	@PostMapping("/logout")
+	public Result<?> logOut(@CurrentUserAnnotation CurrentUser cUser){
+		if (null == cUser) {
+			return ResultGenerator.genFailResult(CommonCode.SERVICE_ERROR, "您还没有登录！", null);
+		}
+		commonService.removeCurrentUser(cUser.getToken());
+		return ResultGenerator.genSuccessResult(CommonCode.SUCCESS, "注销成功！");
 	}
 }
