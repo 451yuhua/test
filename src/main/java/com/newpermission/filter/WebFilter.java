@@ -52,8 +52,16 @@ public class WebFilter implements Filter {
 			httpResponse.getWriter().print(result);
 			return;
 		}
-		Set<String> urls = getCurrentUrls(token);
-		if (null != urls && urls.size() > 0 && !urls.contains(servletPath)) {
+		CurrentUser cUser = getCurrentUser(token);
+		if (null == cUser) {
+			log.info("token已过期token：{}",servletPath);
+			result = JSON.toJSONString(ResultGenerator.genFailResult(CommonCode.SERVICE_UNAVAILABLE, "您的登录信息已过期，请重新登录！", null));
+			setOrigin(httpResponse);
+			httpResponse.getWriter().print(result);
+			return;
+		}
+		Set<String> urls = cUser.getUrlSet();
+		if (null == urls || urls.size() < 0 || !urls.contains(servletPath)) {
 			log.info("没有权限访问url：{}",servletPath);
 			result = JSON.toJSONString(ResultGenerator.genFailResult(CommonCode.SERVICE_UNAVAILABLE, "您无权访问该路径", null));
 			setOrigin(httpResponse);
@@ -73,11 +81,23 @@ public class WebFilter implements Filter {
 		return null;
 	}
 	
+	public CurrentUser getCurrentUser(String token) {
+		if (token == null) {
+			return null;
+		}
+		CommonService commonService = ApplicationContextHelper.getBean(CommonService.class);
+		CurrentUser cUser = commonService.getCurrentUser(token);
+		if (null == cUser) {
+			return null;
+		}
+		return cUser;
+	}
+	
 	private void setOrigin(HttpServletResponse response) {
 		response.setHeader("Access-Control-Allow-Origin", "*");  
         response.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT, OPTIONS, DELETE");  
         response.setHeader("Access-Control-Max-Age", "3600");  
-        response.setHeader("Access-Control-Allow-Headers", "x-requested-with, Content-Type, Accept, Origin");  
+        response.setHeader("Access-Control-Allow-Headers", "x-requested-with, Content-Type, Accept, Origin, access-token");  
         response.setHeader("Access-Control-Allow-Credentials", "true");
 	}
 
