@@ -47,13 +47,13 @@ public class WebFilter implements Filter {
 		httpResponse.setContentType("text/html;charset=UTF-8");
 		String result = null;
 		if(StringUtils.isEmpty(token)) {
-			result = JSON.toJSONString(ResultGenerator.genFailResult(CommonCode.SERVICE_UNAVAILABLE, "您无权访问该路径", null));
+			result = JSON.toJSONString(ResultGenerator.genFailResult(CommonCode.SERVICE_UNAVAILABLE, "请登陆后再进行操作!", null));
 			setOrigin(httpResponse);
 			httpResponse.getWriter().print(result);
 			return;
 		}
 		Set<String> urls = getCurrentUrls(token);
-		if (null != urls && urls.size() > 0 && !urls.contains(servletPath)) {
+		if (null == urls || urls.size() < 1 || !urls.contains(servletPath)) {
 			log.info("没有权限访问url：{}",servletPath);
 			result = JSON.toJSONString(ResultGenerator.genFailResult(CommonCode.SERVICE_UNAVAILABLE, "您无权访问该路径", null));
 			setOrigin(httpResponse);
@@ -76,8 +76,8 @@ public class WebFilter implements Filter {
 	private void setOrigin(HttpServletResponse response) {
 		response.setHeader("Access-Control-Allow-Origin", "*");  
         response.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT, OPTIONS, DELETE");  
-        response.setHeader("Access-Control-Max-Age", "3600");  
-        response.setHeader("Access-Control-Allow-Headers", "x-requested-with, Content-Type, Accept, Origin");  
+        response.setHeader("Access-Control-Max-Age", "-1");  
+        response.setHeader("Access-Control-Allow-Headers", "x-requested-with, Content-Type, Accept, Origin, access-token");  
         response.setHeader("Access-Control-Allow-Credentials", "true");
 	}
 
